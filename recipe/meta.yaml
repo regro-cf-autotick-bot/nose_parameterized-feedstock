@@ -5,28 +5,31 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/n/nose-parameterized/nose-parameterized-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/n/nose-parameterized/nose-parameterized-{{ version }}.tar.gz
   sha256: d35e677aba2f15135b6b7ea7feb88f792b899492ba5365ec0e269015df5214ce
 
 build:
   noarch: python
-  number: 0
-  script: python -m pip install --no-deps --ignore-installed .
+  number: 1
+  script: {{ PYTHON }} -m pip install . --no-deps -vv
 
 requirements:
-  build:
-    - python
+  host:
+    - python {{ python_min }}
     - pip
   run:
-    - python
+    - python >={{ python_min }}
 
 test:
+  requires:
+    - python {{ python_min }}
   imports:
     - nose_parameterized
 
 about:
   home: https://github.com/wolever/nose-parameterized
   license: BSD 2-Clause
+  license_file: LICENSE.txt
   summary: 'Parameterized testing with any Python test framework.'
 
 extra:
